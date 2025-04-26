@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery Time Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            padding: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            margin-top: 15px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #1a242f;
+        }
+        .result {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📦 Delivery Time Predictor – Supply Chain Optimization</h1>
+
+    <section>
+        <h2>Overview</h2>
+        <p><strong>Dataset:</strong> DataCo Global Supply Chain</p>
+        <p><strong>Data Source:</strong><br>
+        Mendeley: <a href="https://data.mendeley.com/datasets/8gx2fvg2k6/5" target="_blank">https://data.mendeley.com/datasets/8gx2fvg2k6/5</a><br>
+        Kaggle: <a href="https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis" target="_blank">https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis</a></p>
+        
+        <p><strong>Problem Statement:</strong><br>
+        In a competitive global market, businesses must enhance supply chain operations and inventory management to meet customer demands efficiently. 
+        This project addresses critical inefficiencies in the supply chain by analyzing factors that lead to customer churn, forecasting demand patterns, detecting fraudulent orders, and improving delivery reliability.</p>
+    </section>
+
+    <form method="POST" action="/predict">
+        <label>Shipping Mode:
+            <select name="shipping_mode" required>
+                <option value="First Class">First Class</option>
+                <option value="Second Class">Second Class</option>
+                <option value="Standard Class">Standard Class</option>
+                <option value="Same Day">Same Day</option>
+            </select>
+        </label>
+
+        <label>Order Region:
+            <select name="order_region" required>
+                <option value="Southeast Asia">Southeast Asia</option>
+                <option value="South Asia">South Asia</option>
+                <option value="Oceania">Oceania</option>
+                <option value="Eastern Asia">Eastern Asia</option>
+                <option value="West Asia">West Asia</option>
+                <option value="US Center">US Center</option>
+                <option value="West of USA">West of USA</option>
+                <option value="East of USA">East of USA</option>
+                <option value="Canada">Canada</option>
+                <option value="Western Europe">Western Europe</option>
+            </select>
+        </label>
+
+        <label>Order State:
+            <select name="order_state" required>
+                <option value="California">California</option>
+                <option value="New York">New York</option>
+                <option value="Texas">Texas</option>
+                <option value="Ontario">Ontario</option>
+                <option value="Florida">Florida</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Tokyo">Tokyo</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Seoul">Seoul</option>
+                <option value="Quebec">Quebec</option>
+            </select>
+        </label>
+
+        <label>Order Item Quantity:
+            <input type="number" name="quantity" min="1" max="10" step="1" required>
+        </label>
+
+        <label>Product Price:
+            <input type="number" name="price" min="0" max="1000" step="10" required>
+        </label>
+
+        <input type="submit" value="Predict Delivery Time">
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <h2>{{ result }}</h2>
+            <img src="{{ url_for('static', filename='plot.png') }}" alt="Prediction Graph">
+        </div>
+    {% endif %}
+</body>
+</html>
+
+
